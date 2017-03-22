@@ -42,7 +42,7 @@
   "scripts": {
     "test": "karma start test/karma.conf.js",
     "build": "grunt",
-    "postinstall": "./node_modules/bower/bin/bower install && npm run build"
+    "postinstall": "bower install && npm run build"
   },
   "dependencies": {
     "express": "^4.15.2",
