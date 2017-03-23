@@ -35,4 +35,8 @@ angular
       });
 
       $urlRouterProvider.otherwise('/');
+  }])
+  .run(['$cookieStore', 'Config', 'Auth', function ($cookieStore, Config, Auth) {
+    Auth.updateHttpAuthHeader();
+    Auth.setCurrentUser($cookieStore.get(Config.COOKIE_NAMESPACE + '.username'));
   }]);
