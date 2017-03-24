@@ -10,13 +10,11 @@
 angular.module('ngTestApp')
   .factory('cookieStore', ['$cookieStore', 'Config', function ($cookieStore, Config) {
     return {
-      tokenKey: Config.COOKIE_NAMESPACE + '.token',
-      usernameKey: Config.COOKIE_NAMESPACE + '.username',
       put: function (key, value) {
-        return $cookieStore.put(this[key + 'Key'], value);
+        return $cookieStore.put(Config.COOKIE_NAMESPACE + '.' + key, value);
       },
       get: function (key) {
-        return $cookieStore.get(this[key + 'Key']);
+        return $cookieStore.get(Config.COOKIE_NAMESPACE + '.' + key);
       }
     };
   }]);
