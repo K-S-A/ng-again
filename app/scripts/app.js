@@ -25,13 +25,13 @@ angular
         url: '/',
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
-        controllerAs: 'main'
+        controllerAs: 'vm'
       })
       .state('about', {
         url: '/about',
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl',
-        controllerAs: 'about'
+        controllerAs: 'vm'
       });
 
       $urlRouterProvider.otherwise('/');
