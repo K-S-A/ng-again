@@ -29,8 +29,6 @@ angular.module('ngTestApp')
     }
 
     function updateHttpAuthHeader(token) {
-      token = token || _fetchToken();
-
       if (!token) {
         delete $http.defaults.headers.common.Authorization;
         return;
@@ -64,13 +62,9 @@ angular.module('ngTestApp')
       o.token = token;
     }
 
-    function _fetchToken() {
-      return cookieStore.get('token');
-    }
-
     o = {
       currentUser: {},
-      token: _fetchToken(),
+      token: cookieStore.get('token'),
       register: register,
       login: login,
       logout: logout,
