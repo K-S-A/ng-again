@@ -36,7 +36,7 @@ angular
 
       $urlRouterProvider.otherwise('/');
   }])
-  .run(['$cookieStore', 'Config', 'Auth', function ($cookieStore, Config, Auth) {
+  .run(['cookieStore', 'Auth', function (cookieStore, Auth) {
     Auth.updateHttpAuthHeader();
-    Auth.setCurrentUser($cookieStore.get(Config.COOKIE_NAMESPACE + '.username'));
+    Auth.setCurrentUser(cookieStore.get('username'));
   }]);

@@ -8,9 +8,8 @@
  * Factory in the ngTestApp.
  */
 angular.module('ngTestApp')
-  .factory('Auth', ['$http', '$cookieStore', 'Config', function ($http, $cookieStore, Config) {
+  .factory('Auth', ['$http', 'cookieStore', 'Config', function ($http, cookieStore, Config) {
     var o;
-    var _tokenKey = Config.COOKIE_NAMESPACE + '.token';
 
     function register(username, password) {
       _authorize('register/', { username: username, password: password });
@@ -41,7 +40,7 @@ angular.module('ngTestApp')
     }
 
     function setCurrentUser(username) {
-      $cookieStore.put(Config.COOKIE_NAMESPACE + '.username', username);
+      cookieStore.put('username', username);
       o.currentUser.username = username;
     }
 
@@ -51,6 +50,7 @@ angular.module('ngTestApp')
           console.log(response);
           _setToken(response.data.token);
           setCurrentUser(params.username);
+          return;
         }
 
         console.log(response.data.message);
@@ -59,13 +59,13 @@ angular.module('ngTestApp')
     }
 
     function _setToken(token) {
-      o.token = token;
-      $cookieStore.put(_tokenKey, token);
+      cookieStore.put('token', token);
       updateHttpAuthHeader(token);
+      o.token = token;
     }
 
     function _fetchToken() {
-      $cookieStore.get(_tokenKey);
+      return cookieStore.get('token');
     }
 
     o = {
