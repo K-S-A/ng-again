@@ -23,7 +23,6 @@ module.exports = function(config) {
       'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
       'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
-      'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-aria/angular-aria.js',
       'bower_components/angular-cookies/angular-cookies.js',
       'bower_components/angular-messages/angular-messages.js',
@@ -34,6 +33,7 @@ module.exports = function(config) {
       'bower_components/angular-ui-router/release/angular-ui-router.js',
       'bower_components/autofill-event/src/autofill-event.js',
       'bower_components/angular-flash-alert/dist/angular-flash.js',
+      'bower_components/angular-django-rest-resource/angular-django-rest-resource.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
