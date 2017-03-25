@@ -9,7 +9,7 @@
             <img ng-src="{{product.img}}" class="img-thumbnail center-block" style="height: 250px;">
             <div class="carousel-caption">
               <h3 class="text-capitalize">
-                <a ui-sref="root" style="font-size: 30px; color: white;">{{product.title}}</a>
+                <a ui-sref="product({id: product.id})" style="font-size: 30px; color: white;">{{product.title}}</a>
               </h3>
               <span class="text-capitalize label label-primary">{{product.text}}</span>
             </div>
@@ -19,6 +19,7 @@
     <a class="carousel-control left" href="" data-target="#productsCarousel" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left"></span>
     </a>
+
     <a class="carousel-control right" href="" data-target="#productsCarousel" data-slide="next">
         <span class="glyphicon glyphicon-chevron-right"></span>
     </a>

@@ -10,7 +10,7 @@
 angular.module('ngTestApp')
   .factory('Product', ['djResource', 'Config',
     function (djResource, Config) {
-      return djResource(
+      var Product = djResource(
         Config.API_BASE_URL + 'products/:id/',
         { id: '@id' },
         {
@@ -18,13 +18,30 @@ angular.module('ngTestApp')
             method: 'GET',
             isArray: true,
             transformResponse: function(data) {
-              return angular.fromJson(data).map(function (product) {
+              return angular.fromJson(data).map(function (product, index) {
                 product.img = Config.IMAGES_BASE_URL + product.img;
+                product._index = index;
                 return product;
               });
             }
           }
         }
       );
+
+      Product.get = function (id) {
+        return Product.all.find(function (product) {
+          return product.id === id;
+        });
+      };
+
+      Product.prevProduct = function (product) {
+        return Product.all[product._index - 1] || Product.all[Product.all.length - 1];
+      };
+
+      Product.nextProduct = function (product) {
+        return Product.all[product._index + 1] || Product.all[0];
+      };
+
+      return Product;
     }
   ]);

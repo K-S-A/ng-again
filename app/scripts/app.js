@@ -35,7 +35,27 @@ angular
       .state('products', {
         url: '/products',
         templateUrl: 'views/products/index.html',
-        controller: 'ProductsCtrl as vm'
+        controller: 'ProductsCtrl as vm',
+        resolve: {
+          products: ['Product', function (Product) {
+            Product.all = Product.query();
+          }]
+        }
+      })
+      .state('product', {
+        url: '/products/{id:int}',
+        templateUrl: 'views/products/show.html',
+        controller: 'ProductsCtrl as vm',
+        resolve: {
+          products: ['$q', 'Product', function ($q, Product) {
+            var deferred = $q.defer();
+            Product.query(function (data) {
+              Product.all = data;
+              deferred.resolve(data);
+            });
+            return deferred.promise;
+          }]
+        }
       })
       .state('about', {
         url: '/about',
