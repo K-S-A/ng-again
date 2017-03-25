@@ -17,6 +17,7 @@ angular
     'ngResource',
     'ngSanitize',
     'ngTouch',
+    'ngFlash',
     'ui.router'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
@@ -24,19 +25,31 @@ angular
       .state('root', {
         url: '/',
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'vm'
+        controller: 'MainCtrl as vm'
+      })
+      .state('register', {
+        url: '/registration',
+        templateUrl: 'views/register.html',
+        controller: 'RegisterCtrl as vm'
       })
       .state('about', {
         url: '/about',
         templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'vm'
+        controller: 'AboutCtrl as vm'
       });
 
       $urlRouterProvider.otherwise('/');
   }])
-  .run(['cookieStore', 'Auth', function (cookieStore, Auth) {
-    Auth.updateHttpAuthHeader(cookieStore.get('token'));
-    Auth.setCurrentUser(cookieStore.get('username'));
+  .run(['$rootScope', '$state', 'Config', 'cookieStore', 'Auth',
+    function ($rootScope, $state, Config, cookieStore, Auth) {
+      $rootScope.$watch(function () {
+        return Auth.token;
+      }, function (newVal) {
+        if (newVal && $state.current.name === 'register') {
+          $state.go('root');
+        }
+      });
+
+      Auth.updateHttpAuthHeader(cookieStore.get('token'));
+      Auth.setCurrentUser(cookieStore.get('username'));
   }]);

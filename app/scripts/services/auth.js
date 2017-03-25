@@ -8,70 +8,72 @@
  * Factory in the ngTestApp.
  */
 angular.module('ngTestApp')
-  .factory('Auth', ['$http', 'cookieStore', 'Config', function ($http, cookieStore, Config) {
-    var o;
+  .factory('Auth', ['$http', 'cookieStore', 'Config',
+    function ($http, cookieStore, Config) {
+      var o;
 
-    function register(username, password) {
-      _authorize('register/', { username: username, password: password });
-    }
-
-    function login(username, password) {
-      _authorize('login/', { username: username, password: password });
-    }
-
-    function logout() {
-      _setToken();
-      setCurrentUser();
-    }
-
-    function isAuthorized() {
-      return !!o.token;
-    }
-
-    function updateHttpAuthHeader(token) {
-      if (!token) {
-        delete $http.defaults.headers.common.Authorization;
-        return;
+      function register(username, password, callback) {
+        _authorize('register/', { username: username, password: password }, callback);
       }
 
-      $http.defaults.headers.common.Authorization = 'Token ' + token;
-    }
+      function login(username, password, callback) {
+        _authorize('login/', { username: username, password: password }, callback);
+      }
 
-    function setCurrentUser(username) {
-      cookieStore.put('username', username);
-      o.currentUser.username = username;
-    }
+      function logout(callback) {
+        _setToken();
+        setCurrentUser();
 
-    function _authorize(path, params) {
-      $http.post(Config.API_BASE_URL + path, params).then(function(response) {
-        if (response.data.success) {
-          console.log(response);
-          _setToken(response.data.token);
-          setCurrentUser(params.username);
+        if (typeof(callback) === 'function') {
+          callback();
+        }
+      }
+
+      function updateHttpAuthHeader(token) {
+        if (!token) {
+          delete $http.defaults.headers.common.Authorization;
           return;
         }
 
-        console.log(response.data.message);
-        logout();
-      });
-    }
+        $http.defaults.headers.common.Authorization = 'Token ' + token;
+      }
 
-    function _setToken(token) {
-      cookieStore.put('token', token);
-      updateHttpAuthHeader(token);
-      o.token = token;
-    }
+      function setCurrentUser(username) {
+        cookieStore.put('username', username);
+        o.currentUser.username = username;
+      }
 
-    o = {
-      currentUser: {},
-      token: cookieStore.get('token'),
-      register: register,
-      login: login,
-      logout: logout,
-      isAuthorized: isAuthorized,
-      updateHttpAuthHeader: updateHttpAuthHeader,
-      setCurrentUser: setCurrentUser
-    };
+      function _authorize(path, params, callback) {
+        $http.post(Config.API_BASE_URL + path, params).then(function(response) {
+          if (response.data.success) {
+            _setToken(response.data.token);
+            setCurrentUser(params.username);
+          } else {
+            o.message = response.data.message;
+            logout();
+          }
 
-    return o;
+          if (typeof(callback) === 'function') {
+            callback(response.data);
+          }
+        });
+      }
+
+      function _setToken(token) {
+        cookieStore.put('token', token);
+        updateHttpAuthHeader(token);
+        o.token = token;
+      }
+
+      o = {
+        currentUser: {},
+        token: cookieStore.get('token'),
+        register: register,
+        login: login,
+        logout: logout,
+        updateHttpAuthHeader: updateHttpAuthHeader,
+        setCurrentUser: setCurrentUser
+      };
+
+      return o;
   }]);
