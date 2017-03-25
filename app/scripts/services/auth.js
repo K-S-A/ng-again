@@ -21,8 +21,7 @@ angular.module('ngTestApp')
       }
 
       function logout(callback) {
-        _setToken();
-        setCurrentUser();
+        o.token = o.currentUser.username = undefined;
 
         if (typeof(callback) === 'function') {
           callback();
@@ -38,19 +37,13 @@ angular.module('ngTestApp')
         $http.defaults.headers.common.Authorization = 'Token ' + token;
       }
 
-      function setCurrentUser(username) {
-        cookieStore.put('username', username);
-        o.currentUser.username = username;
-      }
-
       function _authorize(path, params, callback) {
         $http.post(Config.API_BASE_URL + path, params).then(function(response) {
           if (response.data.success) {
-            _setToken(response.data.token);
-            setCurrentUser(params.username);
+            o.token = response.data.token;
+            o.currentUser.username = params.username;
           } else {
             o.message = response.data.message;
-            logout();
           }
 
           if (typeof(callback) === 'function') {
@@ -59,20 +52,13 @@ angular.module('ngTestApp')
         });
       }
 
-      function _setToken(token) {
-        cookieStore.put('token', token);
-        updateHttpAuthHeader(token);
-        o.token = token;
-      }
-
       o = {
-        currentUser: {},
+        currentUser: { username: cookieStore.get('username') },
         token: cookieStore.get('token'),
         register: register,
         login: login,
         logout: logout,
-        updateHttpAuthHeader: updateHttpAuthHeader,
-        setCurrentUser: setCurrentUser
+        updateHttpAuthHeader: updateHttpAuthHeader
       };
 
       return o;

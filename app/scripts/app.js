@@ -48,8 +48,14 @@ angular
         if (newVal && $state.current.name === 'register') {
           $state.go('root');
         }
+
+        cookieStore.put('token', newVal);
+        Auth.updateHttpAuthHeader(newVal);
       });
 
-      Auth.updateHttpAuthHeader(cookieStore.get('token'));
-      Auth.setCurrentUser(cookieStore.get('username'));
+      $rootScope.$watch(function () {
+        return Auth.currentUser.username;
+      }, function (newVal) {
+        cookieStore.put('username', newVal);
+      });
   }]);
