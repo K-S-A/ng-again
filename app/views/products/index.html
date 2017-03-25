@@ -1,0 +1,25 @@
+<div id="productsCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
+
+    <ol class="carousel-indicators" style="bottom: 0;">
+        <li data-target="#productsCarousel" data-slide-to="{{$index}}" style="box-shadow: 0 0 5pt 2pt grey; margin: 0 3px;" ng-repeat="product in vm.products" class="{{$index ? '' : 'active'}}"></li>
+    </ol>
+
+    <div class="carousel-inner" style="height: 250px;">
+        <div ng-repeat="product in vm.products" class="item {{$index ? '' : 'active'}}">
+            <img ng-src="{{product.img}}" class="img-thumbnail center-block" style="height: 250px;">
+            <div class="carousel-caption">
+              <h3 class="text-capitalize">
+                <a ui-sref="root" style="font-size: 30px; color: white;">{{product.title}}</a>
+              </h3>
+              <span class="text-capitalize label label-primary">{{product.text}}</span>
+            </div>
+        </div>
+    </div>
+
+    <a class="carousel-control left" href="" data-target="#productsCarousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="carousel-control right" href="" data-target="#productsCarousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+</div>

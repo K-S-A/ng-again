@@ -9,6 +9,7 @@
  */
 angular.module('ngTestApp')
   .constant('Config', {
+    'IMAGES_BASE_URL': 'https://smktesting.herokuapp.com/static/',
     'API_BASE_URL': 'https://smktesting.herokuapp.com/api/',
     'COOKIE_NAMESPACE': 'ngTestApp',
     'MESSAGES': {

@@ -28,15 +28,6 @@ angular.module('ngTestApp')
         }
       }
 
-      function updateHttpAuthHeader(token) {
-        if (!token) {
-          delete $http.defaults.headers.common.Authorization;
-          return;
-        }
-
-        $http.defaults.headers.common.Authorization = 'Token ' + token;
-      }
-
       function _authorize(path, params, callback) {
         $http.post(Config.API_BASE_URL + path, params).then(function(response) {
           if (response.data.success) {
@@ -57,8 +48,7 @@ angular.module('ngTestApp')
         token: cookieStore.get('token'),
         register: register,
         login: login,
-        logout: logout,
-        updateHttpAuthHeader: updateHttpAuthHeader
+        logout: logout
       };
 
       return o;
