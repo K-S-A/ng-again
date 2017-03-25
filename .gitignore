@@ -3,3 +3,4 @@
 /.sass-cache
 /.git
 /bower_components
+.DS_Store

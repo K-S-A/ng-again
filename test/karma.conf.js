@@ -32,6 +32,8 @@ module.exports = function(config) {
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/angular-ui-router/release/angular-ui-router.js',
+      'bower_components/autofill-event/src/autofill-event.js',
+      'bower_components/angular-flash-alert/dist/angular-flash.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
@@ -61,8 +63,18 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       'karma-phantomjs-launcher',
-      'karma-jasmine'
+      'karma-jasmine',
+      'karma-ng-html2js-preprocessor'
     ],
+
+    preprocessors: {
+      'app/views/**/*.html': ['ng-html2js']
+    },
+
+    ngHtml2JsPreprocessor: {
+      stripPrefix: 'app/',
+      moduleName: 'my.templates'
+    },
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
