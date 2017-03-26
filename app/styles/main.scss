@@ -89,3 +89,16 @@ body {
     border-bottom: 0;
   }
 }
+
+i.glyphicon:focus {
+  outline-style: none;
+}
+
+.review.ng-enter {
+  transition: all 3s linear;
+  opacity: 0;
+}
+
+.review.ng-enter.ng-enter-active {
+  opacity: 1;
+}

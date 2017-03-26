@@ -7,11 +7,19 @@
         <input type="text" class="form-control" name="username" id="username" ng-model="vm.username" placeholder="Username..." required="true">
         <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
       </div>
+
       <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-        <label for="password" class="sr-only">Username</label>
+        <label for="password" class="sr-only">Password</label>
         <input type="password" class="form-control" name="password" id="password" ng-model="vm.password" placeholder="Password..." required="true">
         <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
       </div>
+
+      <div class="form-group" ng-class="{ 'has-error': form.confirmation.$dirty && vm.password != vm.confirmation }">
+        <label for="confirmation" class="sr-only">Password confirmation</label>
+        <input type="confirmation" class="form-control" name="confirmation" id="confirmation" ng-model="vm.confirmation" placeholder="Password confirmation...">
+        <span ng-show="form.confirmation.$dirty && vm.password != vm.confirmation" class="help-block">Confirmation and password do not match.</span>
+      </div>
+
       <div class="form-group">
          <button type="submit" class="btn btn-primary btn-block" ng-disabled="form.$invalid || vm.loading">Register</button>
          <button type="button" class="btn btn-default btn-block" ui-sref="root">Cancel</button>

@@ -1,13 +1,15 @@
-<div class="panel panel-default" ng-repeat="review in vm.reviews | orderBy: '-created_at'">
+<div class="review panel panel-default" ng-repeat="review in vm.reviews | orderBy: '-created_at'" ng-animate=ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">
   <div class="panel-heading">
     <span uib-rating ng-model="::review.rate" read-only="true" aria-labelledby="default-rating" style="color: #FFD700;"></span>
     <span uib-tooltip="{{::review.created_at}}">{{::review.created_at | timeAgo}}</span>
     <span>from</span>
-    <strong>@{{::review.created_by.username}}</strong>
+    <strong><span class="glyphicon glyphicon-user"></span>{{::review.created_by.username}}</strong>
   </div>
   <div class="panel-body">
     <p ng-bind="::review.text"></p>
   </div>
 </div>
 
-<pre ng-bind="::vm.reviews"></pre>
+<div class="well well-sm text-center" ng-hide="vm.reviews.length">
+  <p>No reviews for current product.</p>
+</div>

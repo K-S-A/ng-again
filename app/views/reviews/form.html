@@ -1,1 +1,27 @@
-<p>Form</p>
+<form id="reviewForm" name="reviewForm" role="form" ng-submit="vm.create()" my-authorized="true">
+  <div class="form-group" style="margin-bottom: 0;">
+    <span uib-rating ng-model="vm.review.rate" aria-labelledby="default-rating" style="color: #FFD700; font-size: 30px;"></span>
+  </div>
+  <div class="form-group" ng-class="{ 'has-error': reviewForm.text.$dirty && reviewForm.text.$error.required }">
+    <label for="text" class="sr-only">Message</label>
+    <textarea ng-model="vm.review.text" class="form-control" name="text" placeholder="Enter review text here..." id="text" rows="3" required="true" style="resize: none;"></textarea>
+    <span ng-show="reviewForm.text.$dirty && reviewForm.text.$error.required" class="help-block">Review text can't be blank.</span>
+  </div>
+
+  <div class="form-group">
+    <div class="btn-group btn-group-sm btn-group-justified" role="group">
+      <div class="btn-group" role="group">
+        <button type="submit" class="btn btn-primary btn-block" ng-disabled="reviewForm.$invalid || vm.loading">Submit review</button>
+      </div>
+      <div class="btn-group" role="group">
+        <button ng-click="vm.reset()" ng-disabled="reviewForm.$pristine || vm.loading" type="button" class="btn btn-default btn-block">Reset</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="alert alert-info" my-authorized="false">
+  <p>
+    Only authorized users can leave reviews! <a ui-sref="register" class="alert-link">Register</a> or login to proceed.
+  </p>
+</div>
