@@ -3,18 +3,14 @@
     <div class="carousel-inner" style="height: 250px;">
         <div class="item active">
             <img ng-src="{{vm.currentProduct.img}}" class="img-thumbnail center-block" style="height: 250px;">
-            <!-- <div class="carousel-caption">
-              <h3 class="text-capitalize" style="font-size: 30px; color: white;">{{vm.currentProduct.title}}</h3>
-              <span class="text-capitalize label label-primary">{{vm.currentProduct.text}}</span>
-            </div> -->
         </div>
     </div>
 
-    <a class="carousel-control left" ui-sref="product({id: vm.prevProductId()})">
+    <a class="carousel-control left" ui-sref="product({id: vm.prevProductId})">
         <span class="glyphicon glyphicon-chevron-left"></span>
     </a>
 
-    <a class="carousel-control right" ui-sref="product({id: vm.nextProductId()})">
+    <a class="carousel-control right" ui-sref="product({id: vm.nextProductId})">
         <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
 </div>

@@ -18,7 +18,9 @@ angular
     'ngTouch',
     'ngFlash',
     'ui.router',
-    'djangoRESTResources'
+    'ui.bootstrap',
+    'djangoRESTResources',
+    'yaru22.angular-timeago'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     $stateProvider
@@ -44,16 +46,37 @@ angular
       })
       .state('product', {
         url: '/products/{id:int}',
-        templateUrl: 'views/products/show.html',
-        controller: 'ProductsCtrl as vm',
+        views: {
+          '': {
+            templateUrl: 'views/products/show.html',
+            controller: 'ProductCtrl as vm',
+          },
+          'reviews': {
+            templateUrl: 'views/reviews/index.html',
+            controller: 'ReviewsCtrl as vm',
+          },
+          'add-review': {
+            templateUrl: 'views/reviews/form.html',
+            controller: 'ReviewsCtrl as vm',
+          }
+        },
         resolve: {
           products: ['$q', 'Product', function ($q, Product) {
             var deferred = $q.defer();
+
+            if (Product.all) {
+              deferred.resolve(Product.all);
+              return deferred.promise;
+            }
+
             Product.query(function (data) {
               Product.all = data;
               deferred.resolve(data);
             });
             return deferred.promise;
+          }],
+          reviews: ['$stateParams', 'Review', function ($stateParams, Review) {
+            Review.all = Review.query({productId: $stateParams.id});
           }]
         }
       })

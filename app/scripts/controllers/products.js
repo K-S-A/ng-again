@@ -8,19 +8,10 @@
  * Controller of the ngTestApp
  */
 angular.module('ngTestApp')
-  .controller('ProductsCtrl', ['$state', 'Product',
-    function ($state, Product) {
+  .controller('ProductsCtrl', ['Product',
+    function (Product) {
       var vm = this;
 
       vm.products = Product.all;
-      vm.currentProduct = Product.get($state.params.id);
-
-      vm.prevProductId = function () {
-        return Product.prevProduct(vm.currentProduct).id;
-      };
-
-      vm.nextProductId = function () {
-        return Product.nextProduct(vm.currentProduct).id;
-      };
     }
   ]);

@@ -57,6 +57,8 @@
     <div class="container">
       <flash-message></flash-message>
       <ui-view></ui-view>
+      <div ui-view="add-review"></div>
+      <div ui-view="reviews"></div>
     </div>
 
     <!-- <div class="footer">
@@ -93,6 +95,8 @@
     <script src="bower_components/autofill-event/src/autofill-event.js"></script>
     <script src="bower_components/angular-flash-alert/dist/angular-flash.js"></script>
     <script src="bower_components/angular-django-rest-resource/angular-django-rest-resource.js"></script>
+    <script src="bower_components/angular-timeago/dist/angular-timeago.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -111,6 +115,9 @@
         <script src="scripts/services/flashprovider.js"></script>
         <script src="scripts/services/product.js"></script>
         <script src="scripts/controllers/products.js"></script>
+        <script src="scripts/services/review.js"></script>
+        <script src="scripts/controllers/reviews.js"></script>
+        <script src="scripts/controllers/product.js"></script>
         <!-- endbuild -->
 </body>
 </html>
