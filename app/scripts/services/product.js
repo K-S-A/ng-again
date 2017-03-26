@@ -19,7 +19,9 @@ angular.module('ngTestApp')
             isArray: true,
             transformResponse: function(data) {
               return angular.fromJson(data).map(function (product, index) {
-                product.img = Config.IMAGES_BASE_URL + product.img;
+                if (!/^https?:.+$/.test(product.img)) {
+                  product.img = Config.IMAGES_BASE_URL + product.img;
+                }
                 product._index = index;
                 return product;
               });

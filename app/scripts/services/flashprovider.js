@@ -31,6 +31,10 @@ angular.module('ngTestApp')
       _flash('success', message || Config.MESSAGES.ON_LOGOUT);
     };
 
+    o._serverError = function (message) {
+      _flash('danger', message || Config.MESSAGES.ON_SERVER_ERROR);
+    };
+
     function _flash(type, message) {
       Flash.clear();
       Flash.create(type, message);

@@ -17,6 +17,7 @@ angular.module('ngTestApp')
       'ON_LOGIN_ERROR': 'Wrong user credentials. Check username/password and try again!',
       'ON_REGISTER': 'Successfully registered!',
       'ON_REGISTER_ERROR': 'Something go wrong. Check username/password and try again!',
-      'ON_LOGOUT': 'Logged out!'
+      'ON_LOGOUT': 'Logged out!',
+      'ON_SERVER_ERROR': 'Server error! Please, try again later.'
     }
   });
