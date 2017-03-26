@@ -1,13 +1,13 @@
 <div class="panel panel-default" ng-repeat="review in vm.reviews | orderBy: '-created_at'">
   <div class="panel-heading">
-    <span uib-rating ng-model="review.rate" read-only="true" aria-labelledby="default-rating" style="color: #FFD700;"></span>
-    <span uib-tooltip="{{review.created_at}}">{{review.created_at | timeAgo}}</span>
+    <span uib-rating ng-model="::review.rate" read-only="true" aria-labelledby="default-rating" style="color: #FFD700;"></span>
+    <span uib-tooltip="{{::review.created_at}}">{{::review.created_at | timeAgo}}</span>
     <span>from</span>
-    <strong>@{{review.created_by.username}}</strong>
+    <strong>@{{::review.created_by.username}}</strong>
   </div>
   <div class="panel-body">
-    <p>{{review.text}}</p>
+    <p ng-bind="::review.text"></p>
   </div>
 </div>
 
-<pre>{{vm.reviews}}</pre>
+<pre ng-bind="::vm.reviews"></pre>

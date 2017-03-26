@@ -6,12 +6,12 @@
 
     <div class="carousel-inner" style="height: 250px;">
         <div ng-repeat="product in vm.products" class="item {{$index ? '' : 'active'}}">
-            <img ng-src="{{product.img}}" class="img-thumbnail center-block" style="height: 250px;">
+            <img ng-src="{{::product.img}}" class="img-thumbnail center-block" style="height: 250px;">
             <div class="carousel-caption">
               <h3 class="text-capitalize">
-                <a ui-sref="product({id: product.id})" style="font-size: 30px; color: white;">{{product.title}}</a>
+                <a ui-sref="product({id: product.id})" style="font-size: 30px; color: white;" ng-bind="::product.title"></a>
               </h3>
-              <span class="text-capitalize label label-primary">{{product.text}}</span>
+              <span class="text-capitalize label label-primary" ng-bind="::product.text"></span>
             </div>
         </div>
     </div>

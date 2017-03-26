@@ -2,7 +2,7 @@
 
     <div class="carousel-inner" style="height: 250px;">
         <div class="item active">
-            <img ng-src="{{vm.currentProduct.img}}" class="img-thumbnail center-block" style="height: 250px;">
+            <img ng-src="{{::vm.currentProduct.img}}" class="img-thumbnail center-block" style="height: 250px;">
         </div>
     </div>
 
@@ -16,6 +16,6 @@
 </div>
 
 <h3 class="text-capitalize text-center" style="font-size: 30px;">
-  {{vm.currentProduct.title}}
-  <small class="text-capitalize">{{vm.currentProduct.text}}</small>
+  {{::vm.currentProduct.title}}
+  <small class="text-capitalize" ng-bind="::vm.currentProduct.text"></small>
 </h3>
