@@ -19,7 +19,7 @@ angular.module('ngTestApp')
           vm.loading = false;
 
           if (data.success) {
-            $state.go('root');
+            $state.go('products');
             FlashProvider.create('register');
           } else {
             FlashProvider.create('registerError', data.message);

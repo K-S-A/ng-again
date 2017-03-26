@@ -12,11 +12,8 @@ angular
   .module('ngTestApp', [
     'ngAria',
     'ngCookies',
-    'ngMessages',
-    'ngResource',
-    'ngSanitize',
-    'ngTouch',
     'ngFlash',
+    'ngAnimate',
     'ui.router',
     'ui.bootstrap',
     'djangoRESTResources',
@@ -24,14 +21,9 @@ angular
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('root', {
-        url: '/',
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl as vm'
-      })
       .state('register', {
         url: '/registration',
-        templateUrl: 'views/register.html',
+        templateUrl: 'views/auth/register.html',
         controller: 'RegisterCtrl as vm'
       })
       .state('products', {
@@ -61,32 +53,29 @@ angular
           }
         },
         resolve: {
-          products: ['$q', 'Product', function ($q, Product) {
+          products: ['$q', '$stateParams', 'Product', function ($q, $stateParams, Product) {
             var deferred = $q.defer();
-
-            if (Product.all) {
-              deferred.resolve(Product.all);
-              return deferred.promise;
-            }
 
             Product.query(function (data) {
               Product.all = data;
-              deferred.resolve(data);
+              if (Product.get($stateParams.id)) {
+                deferred.resolve(data);
+              } else {
+                deferred.reject();
+              }
+            }, function (err) {
+              deferred.reject(err);
             });
+
             return deferred.promise;
           }],
           reviews: ['$stateParams', 'Review', function ($stateParams, Review) {
             Review.all = Review.query({productId: $stateParams.id});
           }]
         }
-      })
-      .state('about', {
-        url: '/about',
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl as vm'
       });
 
-      $urlRouterProvider.otherwise('/');
+      $urlRouterProvider.otherwise('/products');
   }])
   .run(['$rootScope', '$state', 'Config', 'cookieStore', 'Auth',
     function ($rootScope, $state, Config, cookieStore, Auth) {
@@ -99,7 +88,7 @@ angular
         return Auth.token;
       }, function (newVal) {
         if (newVal && $state.current.name === 'register') {
-          $state.go('root');
+          $state.go('products');
         }
 
         cookieStore.put('token', newVal);

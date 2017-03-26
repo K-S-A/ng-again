@@ -8,8 +8,10 @@
  * Controller of the ngTestApp
  */
 angular.module('ngTestApp')
-  .controller('LoginCtrl', ['FlashProvider', 'Auth', function (FlashProvider, Auth) {
+  .controller('LoginCtrl', ['$scope', 'FlashProvider', 'Auth', function ($scope, FlashProvider, Auth) {
     var vm = this;
+
+    vm.currentUser = Auth.currentUser;
 
     vm.login = function () {
       vm.loading = true;
@@ -19,6 +21,7 @@ angular.module('ngTestApp')
 
         if (data.success) {
           vm.username = vm.password = null;
+          $scope.form.$setPristine();
           FlashProvider.create('login');
         } else {
           FlashProvider.create('loginError', data.message);
