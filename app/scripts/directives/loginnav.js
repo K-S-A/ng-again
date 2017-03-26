@@ -7,22 +7,10 @@
  * # loginNav
  */
 angular.module('ngTestApp')
-  .directive('loginNav', ['Auth', function (Auth) {
+  .directive('loginNav', [function () {
     return {
       templateUrl: 'views/auth/nav-login.html',
       controller: 'LoginCtrl as vm',
-      restrict: 'A',
-      link: function postLink(scope, element) {
-        scope.$watch(function () {
-          return Auth.token;
-        }, function (newVal) {
-          if (newVal) {
-            element.hide();
-          } else {
-            scope.form.$setPristine();
-            element.show();
-          }
-        });
-      }
+      restrict: 'A'
     };
   }]);
